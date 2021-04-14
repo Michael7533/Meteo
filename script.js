@@ -7,8 +7,9 @@ let measureSelected = "CO2";
 let buttonSelected = "";
 let boutonSelectionne = "";
 let period = "";
+let dateDebutFormat = "";
+let dateFinFormat = "";
 
-hideSection();
 
 // on récupère la valeur selectionnée dans la liste "measure selected"
 
@@ -24,37 +25,63 @@ const menu = document.querySelectorAll("button");
 for (let i = 0; i < menu.length; i++) {
     menu[i].addEventListener("click", function () {
 
-        // on parametre la requete d'appel à l'API
+        // on parametre la requete d'appel à l'API en fonction du boutton selectionné et de la mesure selectionnée
 
         if (i == 0) {
-           hideSection();
+            hideSection();
             buttonSelected = "/last?measure-type=";
             boutonSelectionne = "Dernière mesure";
             query(baseApiUrl, buttonSelected, measureSelected, period);
 
+
         }
         if (i == 1) {
-           hideSection();
+            hideSection();
             buttonSelected = "/top?measure-type=";
             boutonSelectionne = "TOP mesure";
             query(baseApiUrl, buttonSelected, measureSelected, period);
 
         }
         if (i == 2) {
-           showSection();
-           Erase();
-           recupDD();
-           recupDF()
+            showSection();
+            Erase();
+            recupPeriod();
+            buttonSelected = "/?measure-type=";
+
+            // on récupère les dates selectionnées pour en faire une chaine de caratères et parametrer la requete
+
+            document.getElementById("dateValidation").addEventListener("click", function () {
+                let dateDebutPeriod = document.getElementById("dateStart").value;
+                let strDD = dateDebutPeriod.split('-');
+                dateDebutFormat = "&start-date=" + (strDD[0]) + "-" + (strDD[1]) + "-" + (strDD[2]) + "T00:00";
+
+            })
+            ;
+
+            document.getElementById("dateValidation").addEventListener("click", function () {
+                let dateFinPeriod = document.getElementById("dateEnd").value;
+                let strDF = dateFinPeriod.split('-');
+                dateFinFormat = "&end-date=" + (strDF[0]) + "-" + (strDF[1]) + "-" + (strDF[2]) + "T00:00";
+                period = dateDebutFormat + dateFinFormat;
+
+                queryTable(baseApiUrl, buttonSelected, measureSelected, period)
+            })
+
+
+
         }
-        if (i == 3) {
-         showSection();
-         Erase();
-            }
+        ;
 
     })
+            if (i == 3) {
+                showSection();
+                Erase();
+            }
+
+
 }
 
-// fonction d'appel à l'API
+// fonction d'appel à l'API simple (last et top)
 
 function query(baseApiUrl, boutonSelected, measureSelected, period) {
     fetch(baseApiUrl + boutonSelected + measureSelected + period).then(function (response) {
@@ -68,10 +95,10 @@ function query(baseApiUrl, boutonSelected, measureSelected, period) {
 
 }
 
-// fonction display mesure simple
+
+// fonction display mesure simple (last et top)
 
 function display(resultat) {
-
     Erase();
     let blocButton = document.createElement("restitution");
     blocButton.innerText = boutonSelectionne;
@@ -91,6 +118,35 @@ function display(resultat) {
     document.getElementById("restitution").appendChild(bloc1);
 }
 
+// fonction d'appel à l'API avec période
+
+function queryTable(baseApiUrl, boutonSelected, measureSelected, period) {
+    fetch(baseApiUrl + boutonSelected + measureSelected + period).then(function (response) {
+        response.json().then(function (result) {
+            resultat = result;
+            displayTable(resultat);
+        });
+    }).catch(function (error) {
+        console.log('Il y a eu un problème avec la récupération de la dernière mesure ' + error.message);
+    });
+
+}
+
+// fonction display mesure avec période (tableau)
+
+function displayTable(resultatTable) {
+
+    Erase();
+    for (i = 1; i < resultatTable.length; i++) {
+        let ligneValue = document.createElement("restitution");
+        FormateDate(resultat[i].measureDate);
+        ligneValue.innerText = "Le " + dateDisplay + " : " + resultat[i].value + "  " + resultat[i].unit;
+        document.getElementById("restitution").appendChild(ligneValue);
+    }
+
+}
+
+
 // fonction qui efface les données de la section restitution
 
 function Erase() {
@@ -100,7 +156,7 @@ function Erase() {
     }
 }
 
-// fonction qui formate la date de la mesure au format affichage
+// fonction qui formate la (les) date(s) retournée par la requete au format affichable sur la page
 
 function FormateDate(date) {
     let char = date.split('');
@@ -122,29 +178,42 @@ function FormateDate(date) {
 
 }
 
-// on affiche le formulaire de dates dans la section periodSelection
-function hideSection () {
+// fonction qui cache le formulaire de dates dans la section periodSelection
+
+function hideSection() {
     let option = document.getElementById("periodSelection")
     option.style.display = "none";
 }
-// on cache le formulaire de dates dans la section periodSelection
-function showSection () {
+
+// fonction qui on affiche le formulaire de dates dans la section periodSelection
+
+function showSection() {
     let option = document.getElementById("periodSelection")
     option.style.display = "block";
 }
 
-// on ajoute un lestener sur le bouton valider dans periodSelect
+// fonction qui ajoute un listener sur le bouton valider dans periodSelect et on recupere et on formate  les dates de début et de fin (DD et DF) par deux fonctions
 
-function recupDD (){
-document.getElementById("dateValidation").addEventListener("click", function () {
-    let dateDebutPeriod = document.getElementById("dateStart").value;
-    console.log(dateDebutPeriod);
-})}
-function recupDF (){
+function recupPeriod() {
+    document.getElementById("dateValidation").addEventListener("click", function () {
+        let dateDebutPeriod = document.getElementById("dateStart").value;
+        let strDD = dateDebutPeriod.split('-');
+        dateDebutFormat = "&start-date=" + (strDD[0]) + "-" + (strDD[1]) + "-" + (strDD[2]) + "T00:00";
+    })
+    ;
+
     document.getElementById("dateValidation").addEventListener("click", function () {
         let dateFinPeriod = document.getElementById("dateEnd").value;
-        console.log(dateFinPeriod);
-    })}
+        let strDF = dateFinPeriod.split('-');
+        dateFinFormat = "&end-date=" + (strDF[0]) + "-" + (strDF[1]) + "-" + (strDF[2]) + "T00:00";
+        period = dateDebutFormat + dateFinFormat;
+    })
+
+
+}
+hideSection();
+
+
 
 
 
