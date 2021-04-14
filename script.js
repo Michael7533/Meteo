@@ -112,10 +112,10 @@ function display(resultat) {
     blocData.innerText = resultat.value + " " + resultat.unit;
     document.getElementById("restitution").appendChild(blocData);
 
-    let bloc1 = document.createElement("restitution");
+    let blocDate = document.createElement("restitution");
     FormateDate(resultat.measureDate);
-    bloc1.innerText = "date et heure du relevé: " + dateDisplay;
-    document.getElementById("restitution").appendChild(bloc1);
+    blocDate.innerText = "date et heure du relevé: " + dateDisplay;
+    document.getElementById("restitution").appendChild(blocDate);
 }
 
 // fonction d'appel à l'API avec période
