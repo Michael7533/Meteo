@@ -10,7 +10,6 @@ let period = "";
 let dateDebutFormat = "";
 let dateFinFormat = "";
 
-
 // on récupère la valeur selectionnée dans la liste "measure selected"
 
 document.getElementById("measureSelection").addEventListener("input", function () {
