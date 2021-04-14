@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Station météo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<header>
+    <h1>Bienvenue dans la station météo de la promo</h1>
+</header>
+<body>
+
+<menu>
+    <button id="lastMeasure" type="button"> Dernière mesure</button>
+    <button id="topMeasure" type="button"> Top mesure</button>
+    <button id="tableMeasure" type="button"> Tableau des mesures</button>
+    <button id="graphicMeasure" type="button"> Graphique des mesures</button>
+</menu>
+
+<section id="select">
+    <h2>Quelle mesure vous interesse?</h2>
+    <form>
+        <SELECT id="measureSelection" size="1">
+            <OPTION value="CO2"> Equivalent CO2</OPTION>
+            <OPTION value="HUMIDITY"> Humidité</OPTION>
+            <OPTION value="PRESSURE"> Pression</OPTION>
+            <OPTION value="TEMPERATURE"> Température</OPTION>
+            <OPTION value="VOC"> Particules</OPTION>
+        </SELECT>
+    </form>
+</section>
+
+<section id="periodSelection">
+        <br>
+        <input id="dateStart" type = "date" value ="2021-04-01">
+        <br>
+        <input id="dateEnd" type = "date" value ="2021-04-01">
+        <br>
+        <button id="dateValidation" type = "submit"> validez</button>
+
+</section>
+
+<section id="restitution">
+<br>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>

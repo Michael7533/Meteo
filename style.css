@@ -1,0 +1,77 @@
+html{
+    font-family: Verdana;
+    background: linear-gradient(#dedeee, white);
+
+}
+
+h1 {
+    text-align: center;
+    width: 80vw;
+    margin: auto;
+    background-color: #a5a5a3;
+    font-size: 24px;
+}
+
+menu{
+    display:flex;
+    justify-content: center;
+    margin-top: 30px;
+    background-color: #d2bfbf;
+
+}
+
+button {
+   margin : 8px;
+    border: none;
+    background-color: inherit;
+    width: 20pc;
+}
+
+button:hover {
+    font-weight: bold;
+}
+
+#select{
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    border : solid;
+    border-color: #868585;
+    border-width: 1px;
+
+}
+
+form{
+    margin-bottom: 10px;
+}
+
+restitution {
+
+    text-align: center;
+    background-color: #f3c7c7;
+    display:flex;
+    justify-content: center;
+}
+
+#dateStart {
+    text-align: center;
+    background-color: #f3c7c7;
+    display:flex;
+    justify-content: center;
+    margin: auto;
+}
+#dateEnd {
+    text-align: center;
+    background-color: #f3c7c7;
+    display:flex;
+    justify-content: center;
+    margin: auto;
+}
+#dateValidation {
+    text-align: center;
+    background-color: #f3c7c7;
+    display:flex;
+    justify-content: center;
+    margin: auto;
+}
